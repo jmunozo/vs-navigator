@@ -1,0 +1,223 @@
+/* Paleta Dark UI */
+:root {
+    --bg-main: #0B0E14;
+    --bg-card: #151A22;
+    --text-main: #E2E8F0;
+    --text-muted: #94A3B8;
+    --border-color: #2A3143;
+    --accent-blue: #3B82F6; 
+    --accent-purple: #8B5CF6; 
+    --accent-pink: #EC4899; 
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    padding: 20px;
+}
+
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Panel Superior */
+.top-bar {
+    background-color: var(--bg-card);
+    padding: 15px 30px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.top-bar h1 { font-size: 1.5rem; font-weight: 600; }
+.top-bar h1 span { color: var(--accent-blue); }
+
+/* --- Estilos Modernos para Etiquetas --- */
+.filter-group label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+/* --- Estilos Modernos para Desplegables (Look SaaS) --- */
+.filter-group select {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 10px 35px 10px 15px; /* Espacio extra a la derecha para la flecha */
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    
+    /* Magia: Quita la flecha fea por defecto del navegador */
+    appearance: none; 
+    -webkit-appearance: none;
+    
+    /* Flecha SVG personalizada e incrustada */
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394A3B8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px top 50%; /* Posiciona la flecha a la derecha */
+    background-size: 10px auto;
+    
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Efectos hover y click (Focus) */
+.filter-group select:hover {
+    border-color: var(--accent-blue);
+}
+
+.filter-group select:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Resplandor azul elegante */
+}
+
+/* Ajustar el contenedor de filtros para que respiren */
+.filters {
+    display: flex;
+    gap: 20px; 
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Layout */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.charts-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- ESTILOS D3.JS --- */
+/* Mapa */
+.state {
+    stroke: var(--bg-main);
+    stroke-width: 0.5;
+    cursor: pointer;
+}
+.state:hover { filter: brightness(1.3); }
+
+/* Barras */
+.bar {
+    fill: var(--accent-purple);
+    border-radius: 4px;
+    transition: opacity 0.2s;
+}
+.bar:hover { opacity: 0.8; }
+
+/* Tendencias (Líneas y Áreas) */
+.line { 
+    fill: none; 
+    stroke: var(--accent-pink); 
+    stroke-width: 3; 
+}
+.area { 
+    fill: var(--accent-pink); 
+    fill-opacity: 0.15; 
+}
+
+/* Ejes Generales */
+.domain, .tick line { stroke: var(--border-color); }
+.tick text { fill: var(--text-muted); font-size: 12px; }
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    padding: 10px 15px;
+    background: rgba(15, 23, 42, 0.95);
+    color: #fff;
+    border: 1px solid var(--accent-blue);
+    border-radius: 8px;
+    pointer-events: none;
+    font-size: 13px;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+}
+
+/* Mapa */
+.state {
+    stroke: #374151; /* Gris medio para que las fronteras SIEMPRE se vean */
+    stroke-width: 0.5;
+    cursor: pointer;
+}
+
+/* Input de búsqueda */
+.search-input {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 9px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    width: 200px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Botón de reinicio */
+.btn-reset {
+    background: rgba(236, 72, 153, 0.1);
+    color: var(--accent-pink);
+    border: 1px solid var(--accent-pink);
+    padding: 9px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.btn-reset:hover {
+    background: var(--accent-pink);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+/* Estilos para la leyenda del mapa */
+.legend-title { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase;}
+.legend-gradient { width: 150px; height: 8px; border-radius: 4px; margin-bottom: 5px; }
+.legend-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-main); }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard CRM - Ventas</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="top-bar">
+            <div class="logo">
+                <h1>Control de Ventas <span>PRO</span></h1>
+            </div>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="year-filter">Año:</label>
+                    <select id="year-filter">
+                        <option value="All">Todos</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="category-filter">Categoría:</label>
+                    <select id="category-filter">
+                        <option value="All">Todas</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                        <option value="Technology">Technology</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="state-filter">Estado:</label>
+                    <input list="state-list" id="state-filter" placeholder="🔍 Escribe un estado..." class="search-input">
+                    <datalist id="state-list">
+                        </datalist>
+                </div>
+                
+                <button id="reset-btn" class="btn-reset">🔄 Reiniciar</button>
+            </div>
+        </header>
+
+        <main class="grid-layout">
+
+            <section class="card map-card">
+                <h2>Distribución Geográfica</h2>
+                <div id="map-container" style="position: relative; width: 100%; height: 450px;">
+                    <div id="map" style="width: 100%; height: 100%;"></div>
+                    <div id="map-legend" style="position: absolute; bottom: 10px; right: 10px; background: rgba(21, 26, 34, 0.9); padding: 10px; border-radius: 8px; border: 1px solid #2A3143;"></div>
+                </div>
+            </section>
+
+            <section class="charts-column">
+                <div class="card trend-card">
+                    <h2 id="trend-title">Tendencia de Ventas (Nacional)</h2>
+                    <div id="linechart"></div>
+                </div>
+                
+                <div class="card bar-card">
+                    <h2 id="bar-title">Top Sub-Categorías (Nacional)</h2>
+                    <div id="barchart"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="tooltip" class="tooltip" style="opacity: 0;"></div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
