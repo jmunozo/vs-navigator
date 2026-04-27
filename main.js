@@ -11,6 +11,28 @@ let globalData = [];
 let currentState = "All"; 
 let currentMonthFilter = null;
 
+// Función para posicionamiento inteligente
+function positionTooltip(event, tooltipElement) {
+    const node = tooltipElement.node();
+    const width = node.offsetWidth;
+    const height = node.offsetHeight;
+    
+    let x = event.pageX + 15;
+    let y = event.pageY - 28;
+
+    // Si choca con el borde derecho de la pantalla, lo volteamos hacia la izquierda
+    if (x + width > window.innerWidth + window.scrollX - 20) {
+        x = event.pageX - width - 15;
+    }
+    
+    // Si choca con el borde inferior, lo subimos
+    if (y + height > window.innerHeight + window.scrollY - 20) {
+        y = event.pageY - height - 15;
+    }
+    
+    tooltipElement.style("left", x + "px").style("top", y + "px");
+}
+
 // 1. CARGA DE DATOS
 Promise.all([
     d3.csv("data_servicios.csv"),
@@ -124,8 +146,8 @@ function initDashboard(geoData) {
             .on("mouseover", function(event, d) {
                 let stateSales = salesByState.get(d.properties.name) || 0;
                 tooltip.transition().duration(200).style("opacity", .95);
-                tooltip.html(`<strong>${d.properties.name}</strong><br/>Ventas: $${stateSales.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`)
-                    .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+                tooltip.html(`<strong>${d.properties.name}</strong><br/>Ventas: $${stateSales.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`);
+                positionTooltip(event, tooltip); // <-- AGREGA ESTO
             })
             .on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0))
             .on("click", function(event, d) {
@@ -172,8 +194,9 @@ function initDashboard(geoData) {
         barsEnter.merge(bars)
             .on("mouseover", function(event, d) {
                 tooltip.transition().duration(200).style("opacity", .95);
-                tooltip.html(`<strong>${d.key}</strong><br/>$${d.value.toLocaleString('en-US', {minimumFractionDigits: 2})}`)
-                    .style("left", (event.pageX + 10) + "px").style("top", (event.pageY - 28) + "px");
+                tooltip.html(`<strong>${d.key}</strong><br/>$${d.value.toLocaleString('en-US', {minimumFractionDigits: 2})}`);
+                positionTooltip(event, tooltip); 
+                    
             })
             .on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
     }
@@ -245,8 +268,8 @@ function initDashboard(geoData) {
                        .transition().duration(100).attr("r", 8).attr("fill", "#f472b6");
                 
                 tooltip.transition().duration(200).style("opacity", .95);
-                tooltip.html(`<strong>${d3.timeFormat("%B %Y")(d.date)}</strong><br/>Ventas: $${d.sales.toLocaleString('en-US', {minimumFractionDigits: 2})}<br/><span style="font-size: 10px; color: #cbd5e1;">(Clic para filtrar)</span>`)
-                    .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+                tooltip.html(`<strong>${d3.timeFormat("%B %Y")(d.date)}</strong><br/>Ventas: $${d.sales.toLocaleString('en-US', {minimumFractionDigits: 2})}<br/><span style="font-size: 10px; color: #cbd5e1;">(Clic para filtrar)</span>`);
+                positionTooltip(event, tooltip); 
             })
             .on("mouseout", function(event, d) {
                 // Regresar a la normalidad, excepto si está seleccionado
@@ -363,9 +386,16 @@ function initDashboard(geoData) {
     
     // Al escribir/buscar un estado
     d3.select("#state-filter").on("input", function() {
-        currentState = d3.select(this).property("value");
-        if (currentState === "" || statesList.includes(currentState)) {
-            if(currentState === "") currentState = "All";
+        let typedValue = d3.select(this).property("value").trim().toLowerCase();
+        let matchedState = statesList.find(s => s.toLowerCase() === typedValue);
+
+        if (typedValue === "") {
+            currentState = "All";
+            currentMonthFilter = null;
+            updateAllCharts();
+        } else if (matchedState) {
+            d3.select(this).property("value", matchedState);
+            currentState = matchedState;
             currentMonthFilter = null; 
             updateAllCharts();
         }

@@ -56,7 +56,7 @@ body {
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Espacio entre el título y los filtros */
+    gap: 15px; 
 }
 
 /* Fila de arriba (Logo + Año) */
@@ -92,7 +92,7 @@ body {
 .filter-actions {
     display: flex;
     gap: 10px;
-    margin-left: auto; /* Empuja los botones a la derecha en PC */
+    margin-left: auto; 
 }
 
 /* Estilos de los inputs y selects */
