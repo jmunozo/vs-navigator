@@ -1,5 +1,9 @@
-# VSN: Visual Sales Navigator
-
+/**
+ * VSN: Visual Sales Navigator
+ * Fuente de Datos: Superstore Sales Dataset (Kaggle/Tableau)
+ * Procesamiento y Visualización: D3.js v7
+ */
+ 
 **Análisis comercial estratégico impulsado por datos.**
 
 ## 🎯 Proyecto
