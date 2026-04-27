@@ -39,8 +39,45 @@
                 </div>
                 
                 <button id="reset-btn" class="btn-reset">🔄 Reiniciar</button>
+                <button id="theme-toggle" class="btn-theme">☀️</button>
+            
             </div>
         </header>
+
+        <section class="kpi-container">
+            <div class="kpi-card">
+                <p>Ventas Totales</p>
+                <h3 id="kpi-sales">$0</h3>
+            </div>
+            <div class="kpi-card">
+                <p>Transacciones</p>
+                <h3 id="kpi-orders">0</h3>
+            </div>
+            <div class="kpi-card">
+                <p>Ticket Promedio</p>
+                <h3 id="kpi-aov">$0</h3>
+            </div>
+            <div class="kpi-card">
+                <p>Estado Principal</p>
+                <h3 id="kpi-state">-</h3>
+            </div>
+            <div class="kpi-card">
+                <p>Categoría Top</p>
+                <h3 id="kpi-category">-</h3>
+            </div>
+            <div class="kpi-card">
+                <p>Sub-Categoría Top</p>
+                <h3 id="kpi-subcategory">-</h3>
+            </div>
+            <div class="kpi-card">
+                <p>Segmento Principal</p>
+                <h3 id="kpi-segment">-</h3>
+            </div>
+            <div class="kpi-card">
+                <p>Envío Frecuente</p>
+                <h3 id="kpi-ship">-</h3>
+            </div>
+        </section>
 
         <main class="grid-layout">
 
@@ -48,7 +85,7 @@
                 <h2>Distribución Geográfica</h2>
                 <div id="map-container" style="position: relative; width: 100%; height: 450px;">
                     <div id="map" style="width: 100%; height: 100%;"></div>
-                    <div id="map-legend" style="position: absolute; bottom: 10px; right: 10px; background: rgba(21, 26, 34, 0.9); padding: 10px; border-radius: 8px; border: 1px solid #2A3143;"></div>
+                    <div id="map-legend" style="position: absolute; bottom: 5px; right: 5px; background: rgba(21, 26, 34, 0.8); padding: 8px; border-radius: 8px; border: 1px solid #2A3143; backdrop-filter: blur(4px);"></div>
                 </div>
             </section>
 

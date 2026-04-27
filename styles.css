@@ -8,6 +8,37 @@
     --accent-blue: #3B82F6; 
     --accent-purple: #8B5CF6; 
     --accent-pink: #EC4899; 
+    --map-zero: #1f2937;
+    --map-stroke: #374151;
+}
+
+/* --- TEMA CLARO --- */
+/* Cuando el documento tenga este atributo, reemplazará los colores oscuros */
+[data-theme="light"] {
+    --bg-main: #F0F2F5;
+    --bg-card: #FFFFFF;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border-color: #E2E8F0;
+    --map-zero: #F1F5F9;
+    --map-stroke: #CBD5E1;
+    /* Los colores de acento (azul, rosa, morado) se quedan igual porque lucen genial sobre blanco */
+}
+
+/* Estilo del botón del tema */
+.btn-theme {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+.btn-theme:hover {
+    background: var(--bg-main);
 }
 
 * {
@@ -221,3 +252,50 @@ body {
 .legend-title { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase;}
 .legend-gradient { width: 150px; height: 8px; border-radius: 4px; margin-bottom: 5px; }
 .legend-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-main); }
+
+/* --- Panel de Indicadores Clave (KPIs) --- */
+.kpi-container {
+    display: grid;
+    /* Esto hace que las tarjetas se adapten solas al ancho de la pantalla */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin-top: -5px; /* Para acercarlo un poco a los filtros */
+}
+
+.kpi-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px); /* Efecto de levitación */
+    border-color: var(--accent-blue);
+}
+
+.kpi-card p {
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.kpi-card h3 {
+    color: var(--text-main);
+    font-size: 1.15rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Pone "..." si el texto es muy largo */
+}
+
+/* Darle color a las métricas financieras clave */
+#kpi-sales, #kpi-aov { color: var(--accent-cyan); }
+#kpi-orders { color: var(--accent-pink); }
+#kpi-state { color: var(--accent-blue); }

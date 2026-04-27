@@ -113,14 +113,15 @@ function initDashboard(geoData) {
             .attr("class", "state")
             .attr("d", path)
             .merge(states) 
-            .attr("stroke", "#374151") 
+            // CAMBIO: Usamos la variable para el borde
+            .attr("stroke", "var(--map-stroke)") 
             .attr("stroke-width", 0.8)
             .classed("active-state", d => d.properties.name === currentState && currentState !== "All")
             .transition()
             .duration(800)
             .style("fill", function(d) {
                 let stateSales = salesByState.get(d.properties.name) || 0;
-                return stateSales > 0 ? colorScale(stateSales) : "#1f2937"; 
+                return stateSales > 0 ? colorScale(stateSales) : "var(--map-zero)"; 
             });
 
         svgMap.selectAll(".state")
@@ -268,7 +269,51 @@ function initDashboard(geoData) {
             });
     }
 
-    // ---- LÓGICA MAESTRA DE FILTRADO CRUZADO ----
+    // ---- ACTUALIZACIÓN DE INDICADORES (KPIs) ----
+    function updateKPIs(dataFilt) {
+        // 1. Cálculos Financieros Directos
+        const totalSales = d3.sum(dataFilt, d => d.Sales);
+        const totalOrders = dataFilt.length;
+        const aov = totalOrders > 0 ? totalSales / totalOrders : 0;
+
+        // Actualizamos los textos en el HTML con formato
+        d3.select("#kpi-sales").text(totalSales > 0 ? "$" + d3.format(",.0f")(totalSales) : "$0");
+        d3.select("#kpi-orders").text(d3.format(",")(totalOrders));
+        d3.select("#kpi-aov").text(aov > 0 ? "$" + d3.format(",.2f")(aov) : "$0.00");
+
+        // Función auxiliar para extraer al "ganador" (Top 1) de una agrupación
+        function getTop1(rollupMap) {
+            if(rollupMap.size === 0) return "-";
+            // Convierte el mapa a un array, lo ordena de mayor a menor y saca el nombre del 1ro
+            return Array.from(rollupMap).sort((a,b) => b[1] - a[1])[0][0];
+        }
+
+        // 2. Cálculos Categóricos (Agrupaciones)
+        
+        // Estado con más ventas de dinero
+        let salesByState = d3.rollup(dataFilt, v => d3.sum(v, d => d.Sales), d => d.State);
+        d3.select("#kpi-state").text(getTop1(salesByState));
+
+        // Categoría con más ventas de dinero
+        let salesByCat = d3.rollup(dataFilt, v => d3.sum(v, d => d.Sales), d => d.Category);
+        d3.select("#kpi-category").text(getTop1(salesByCat));
+
+        // Sub-Categoría con más ventas de dinero
+        let salesBySub = d3.rollup(dataFilt, v => d3.sum(v, d => d.Sales), d => d['Sub-Category']);
+        d3.select("#kpi-subcategory").text(getTop1(salesBySub));
+
+        // Segmento con más transacciones (frecuencia)
+        let ordersBySegment = d3.rollup(dataFilt, v => v.length, d => d.Segment);
+        d3.select("#kpi-segment").text(getTop1(ordersBySegment));
+
+        // Envío más frecuente (frecuencia)
+        let ordersByShip = d3.rollup(dataFilt, v => v.length, d => d['Ship Mode']);
+        let topShip = getTop1(ordersByShip);
+        // Limpiamos el texto para que quepa mejor en la tarjeta (ej: "Standard Class" -> "Standard")
+        if (topShip !== "-") topShip = topShip.replace(" Class", "");
+        d3.select("#kpi-ship").text(topShip);
+    }
+
     // ---- LÓGICA MAESTRA DE FILTRADO CRUZADO ----
     function updateAllCharts() {
         let category = d3.select("#category-filter").property("value");
@@ -303,6 +348,7 @@ function initDashboard(geoData) {
 
         updateBar(stateFilteredData);
         updateTrend(stateFilteredData);
+        updateKPIs(stateFilteredData); 
     }
 
     // ---- LISTENERS ----
@@ -350,3 +396,20 @@ function initDashboard(geoData) {
     // Carga inicial
     updateAllCharts();
 }
+
+// ---- LÓGICA DEL MODO CLARO / OSCURO ----
+const themeBtn = document.getElementById("theme-toggle");
+themeBtn.addEventListener("click", () => {
+    // Apuntamos al elemento raíz de la página (<html>)
+    const rootElement = document.documentElement;
+    
+    // Si ya está en modo claro, lo quitamos (vuelve al oscuro por defecto)
+    if (rootElement.getAttribute("data-theme") === "light") {
+        rootElement.removeAttribute("data-theme");
+        themeBtn.textContent = "☀️"; // Cambiamos el icono
+    } else {
+        // Si es oscuro, le ponemos el atributo del modo claro
+        rootElement.setAttribute("data-theme", "light");
+        themeBtn.textContent = "🌙"; 
+    }
+});
