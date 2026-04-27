@@ -51,8 +51,9 @@ function initDashboard(geoData) {
     years.forEach(y => d3.select("#year-filter").append("option").attr("value", y).text(y));
 
     const statesList = Array.from(new Set(globalData.map(d => d.State))).filter(s => s).sort();
-    // Ahora inyectamos <option> en el datalist (que no requiere atributo text)
-    statesList.forEach(s => d3.select("#state-list").append("option").attr("value", s));
+
+    // statesList.forEach(s => d3.select("#state-list").append("option").attr("value", s));
+    statesList.forEach(s => d3.select("#state-list").append("option").attr("value", s).text(s));
 
     // ---- CONFIGURACIÓN DE CONTENEDORES SVG ----
     // 1. Mapa Responsive

@@ -10,18 +10,20 @@
 <body>
     <div class="dashboard-container">
         <header class="top-bar">
-            <div class="logo">
-                <h1>Visual Sales <span>Navigator</span></h1>
-            </div>
-            <div class="filters">
-                <div class="filter-group">
+            <div class="top-bar-row">
+                <div class="logo">
+                    <h1>Visual Sales <span>Navigator</span></h1>
+                </div>
+                <div class="filter-group year-group">
                     <label for="year-filter">Año:</label>
                     <select id="year-filter">
                         <option value="All">Todos</option>
                     </select>
                 </div>
+            </div>
 
-                <div class="filter-group">
+            <div class="filters-main">
+                <div class="filter-group half-width">
                     <label for="category-filter">Categoría:</label>
                     <select id="category-filter">
                         <option value="All">Todas</option>
@@ -31,16 +33,16 @@
                     </select>
                 </div>
 
-                <div class="filter-group">
+                <div class="filter-group half-width">
                     <label for="state-filter">Estado:</label>
-                    <input list="state-list" id="state-filter" placeholder="🔍 Escribe un estado..." class="search-input">
-                    <datalist id="state-list">
-                        </datalist>
+                    <input list="state-list" id="state-filter" placeholder="🔍 Escribe..." class="search-input">
+                    <datalist id="state-list"></datalist>
                 </div>
                 
-                <button id="reset-btn" class="btn-reset">🔄 Reiniciar</button>
-                <button id="theme-toggle" class="btn-theme">☀️</button>
-            
+                <div class="filter-actions">
+                    <button id="reset-btn" class="btn-reset">🔄 Reiniciar</button>
+                    <button id="theme-toggle" class="btn-theme">☀️</button>
+                </div>
             </div>
         </header>
 
