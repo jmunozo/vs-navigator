@@ -22,11 +22,9 @@ Promise.all([
     // 1. Puerto Rico rompe la proyección geoAlbersUsa, lo filtramos.
     geoData.features = geoData.features.filter(d => d.properties.name !== 'Puerto Rico');
 
-    // 2. EL BUG DE VIRGINIA: Detectamos el estado y eliminamos el rectángulo gigante
+    // 2. EL BUG DE VIRGINIA: Corregir el estado y eliminar el rectángulo gigante
     geoData.features.forEach(d => {
         if (d.properties.name === "Virginia" && d.geometry.type === "MultiPolygon") {
-            // El recuadro falso tiene solo 5 puntos. Los polígonos reales tienen cientos.
-            // Esto extirpa la figura defectuosa y deja el mapa intacto.
             d.geometry.coordinates = d.geometry.coordinates.filter(poly => poly[0].length > 10);
         }
     });
@@ -57,14 +55,12 @@ function initDashboard(geoData) {
     statesList.forEach(s => d3.select("#state-list").append("option").attr("value", s));
 
     // ---- CONFIGURACIÓN DE CONTENEDORES SVG ----
-    
     // 1. Mapa Responsive
     const svgMap = d3.select("#map").append("svg")
         .attr("viewBox", `0 0 ${width} ${height}`) 
         .style("width", "100%")
         .style("height", "auto"); 
     
-    // fitSize ahora sí puede calcular el tamaño perfecto porque el recuadro gigante de Virginia ya no estorba
     const projection = d3.geoAlbersUsa().fitSize([width, height], geoData);
     const path = d3.geoPath().projection(projection);
 
@@ -113,7 +109,6 @@ function initDashboard(geoData) {
             .attr("class", "state")
             .attr("d", path)
             .merge(states) 
-            // CAMBIO: Usamos la variable para el borde
             .attr("stroke", "var(--map-stroke)") 
             .attr("stroke-width", 0.8)
             .classed("active-state", d => d.properties.name === currentState && currentState !== "All")
@@ -207,11 +202,11 @@ function initDashboard(geoData) {
         pathLine.datum(sortedData).transition().duration(1000).attr("d", lineGen);
         pathArea.datum(sortedData).transition().duration(1000).attr("d", areaGen);
 
-        // --- 1. DIBUJAR LÍNEA Y ÁREA PRIMERO (Al fondo) ---
+        // --- 1. DIBUJAR LÍNEA Y ÁREA PRIMERO ---
         pathLine.datum(sortedData).transition().duration(1000).attr("d", lineGen);
         pathArea.datum(sortedData).transition().duration(1000).attr("d", areaGen);
 
-        // --- 2. DIBUJAR PUNTOS AL FINAL (Al frente, para que detecten el mouse) ---
+        // --- 2. DIBUJAR PUNTOS AL FINAL ---
         // --- PUNTOS VISIBLES ---
         const dots = svgTrend.selectAll(".dot").data(sortedData);
         dots.exit().transition().duration(500).attr("r", 0).remove();
@@ -220,7 +215,7 @@ function initDashboard(geoData) {
             .attr("class", "dot")
             .attr("r", 0)
             .attr("fill", "#ec4899")
-            .style("pointer-events", "none"); // El punto visible ignora el ratón
+            .style("pointer-events", "none"); 
 
         const allDots = dotsEnter.merge(dots)
             .attr("cx", d => xTrend(d.date))
@@ -236,7 +231,7 @@ function initDashboard(geoData) {
         
         const hitAreasEnter = hitAreas.enter().append("circle")
             .attr("class", "hit-area")
-            .attr("r", 15) // RADIO GIGANTE INVISIBLE
+            .attr("r", 15) 
             .attr("fill", "transparent")
             .style("cursor", "pointer");
 
@@ -264,7 +259,7 @@ function initDashboard(geoData) {
             .on("click", function(event, d) {
                 // Lógica para filtrar al hacer clic en el punto
                 if (currentMonthFilter && currentMonthFilter.getTime() === d.date.getTime()) {
-                    currentMonthFilter = null; // Clic de nuevo para quitar filtro
+                    currentMonthFilter = null; 
                 } else {
                     currentMonthFilter = d.date; // Aplicar filtro
                 }
@@ -354,10 +349,7 @@ function initDashboard(geoData) {
         updateKPIs(stateFilteredData); 
     }
 
-    // ---- LISTENERS ----
-    // ---- LISTENERS REFINADOS ----
-    
-    // Al cambiar Categoría o Año, limpiamos el filtro del mes
+    // ---- LISTENERS ----    
     d3.select("#category-filter").on("change", function() {
         currentMonthFilter = null; 
         updateAllCharts();
@@ -373,7 +365,7 @@ function initDashboard(geoData) {
         currentState = d3.select(this).property("value");
         if (currentState === "" || statesList.includes(currentState)) {
             if(currentState === "") currentState = "All";
-            currentMonthFilter = null; // Soltamos el punto temporal
+            currentMonthFilter = null; 
             updateAllCharts();
         }
     });
@@ -381,7 +373,7 @@ function initDashboard(geoData) {
     // Al hacer doble clic en el mapa
     d3.select("#map").on("dblclick", function() {
         currentState = "All";
-        currentMonthFilter = null; // Soltamos el punto temporal
+        currentMonthFilter = null;
         d3.select("#state-filter").property("value", ""); 
         updateAllCharts();
     });
@@ -403,15 +395,12 @@ function initDashboard(geoData) {
 // ---- LÓGICA DEL MODO CLARO / OSCURO ----
 const themeBtn = document.getElementById("theme-toggle");
 themeBtn.addEventListener("click", () => {
-    // Apuntamos al elemento raíz de la página (<html>)
     const rootElement = document.documentElement;
     
-    // Si ya está en modo claro, lo quitamos (vuelve al oscuro por defecto)
     if (rootElement.getAttribute("data-theme") === "light") {
         rootElement.removeAttribute("data-theme");
-        themeBtn.textContent = "☀️"; // Cambiamos el icono
+        themeBtn.textContent = "☀️"; 
     } else {
-        // Si es oscuro, le ponemos el atributo del modo claro
         rootElement.setAttribute("data-theme", "light");
         themeBtn.textContent = "🌙"; 
     }

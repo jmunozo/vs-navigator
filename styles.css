@@ -13,7 +13,6 @@
 }
 
 /* --- TEMA CLARO --- */
-/* Cuando el documento tenga este atributo, reemplazará los colores oscuros */
 [data-theme="light"] {
     --bg-main: #F0F2F5;
     --bg-card: #FFFFFF;
@@ -22,7 +21,6 @@
     --border-color: #E2E8F0;
     --map-zero: #F1F5F9;
     --map-stroke: #CBD5E1;
-    /* Los colores de acento (azul, rosa, morado) se quedan igual porque lucen genial sobre blanco */
 }
 
 /* Estilo del botón del tema */
@@ -77,7 +75,6 @@ body {
 .top-bar h1 { font-size: 1.5rem; font-weight: 600; }
 .top-bar h1 span { color: var(--accent-blue); }
 
-/* --- Estilos Modernos para Etiquetas --- */
 .filter-group label {
     font-size: 0.85rem;
     color: var(--text-muted);
@@ -85,25 +82,22 @@ body {
     font-weight: 500;
 }
 
-/* --- Estilos Modernos para Desplegables (Look SaaS) --- */
 .filter-group select {
     background-color: var(--bg-card);
     color: var(--text-main);
     border: 1px solid var(--border-color);
-    padding: 10px 35px 10px 15px; /* Espacio extra a la derecha para la flecha */
+    padding: 10px 35px 10px 15px; 
     border-radius: 8px;
     font-size: 0.9rem;
     outline: none;
     cursor: pointer;
     
-    /* Magia: Quita la flecha fea por defecto del navegador */
     appearance: none; 
     -webkit-appearance: none;
     
-    /* Flecha SVG personalizada e incrustada */
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394A3B8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
-    background-position: right 12px top 50%; /* Posiciona la flecha a la derecha */
+    background-position: right 12px top 50%; 
     background-size: 10px auto;
     
     transition: all 0.3s ease;
@@ -117,7 +111,7 @@ body {
 
 .filter-group select:focus {
     border-color: var(--accent-blue);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Resplandor azul elegante */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 /* Ajustar el contenedor de filtros para que respiren */
@@ -206,7 +200,7 @@ body {
 
 /* Mapa */
 .state {
-    stroke: #374151; /* Gris medio para que las fronteras SIEMPRE se vean */
+    stroke: #374151; 
     stroke-width: 0.5;
     cursor: pointer;
 }
@@ -256,10 +250,9 @@ body {
 /* --- Panel de Indicadores Clave (KPIs) --- */
 .kpi-container {
     display: grid;
-    /* Esto hace que las tarjetas se adapten solas al ancho de la pantalla */
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 15px;
-    margin-top: -5px; /* Para acercarlo un poco a los filtros */
+    margin-top: -5px;
 }
 
 .kpi-card {
@@ -292,10 +285,9 @@ body {
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Pone "..." si el texto es muy largo */
+    text-overflow: ellipsis; 
 }
 
-/* Darle color a las métricas financieras clave */
 #kpi-sales, #kpi-aov { color: var(--accent-cyan); }
 #kpi-orders { color: var(--accent-pink); }
 #kpi-state { color: var(--accent-blue); }
