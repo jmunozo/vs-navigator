@@ -377,3 +377,17 @@ body {
         right: 0px !important;
     }
 }
+
+/* Fuerza a Safari y Chrome móvil a mostrar la flecha del datalist */
+.search-input::-webkit-calendar-picker-indicator {
+    display: block !important;
+    opacity: 1 !important;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+/* Evita que el celular intente redondear los bordes feo en iOS */
+input[type="search"] {
+    -webkit-appearance: none;
+    appearance: none;
+}
