@@ -20,7 +20,7 @@ VSN es un dashboard analítico de alto impacto diseñado para transformar archiv
 * **Geodata:** GeoJSON (Fronteras nacionales).
 
 ## ⚡ Instalación Rápida
-1.  **Clonar:** `git clone https://github.com/jmunozo/vsn.git`
+1.  **Clonar:** `git clone https://github.com/jmunozo/vs-navigator.git`
 2.  **Servir:** Abrir con `Live Server` (VS Code) o ejecutar `python -m http.server`.
 3.  **Explorar:** Navega a `localhost:5500`.
 4.  **Opcional
