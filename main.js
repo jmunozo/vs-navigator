@@ -188,8 +188,11 @@ function initDashboard(geoData) {
         let sortedData = Array.from(trendData, ([date, sales]) => ({date, sales})).sort((a, b) => a.date - b.date);
 
         if(sortedData.length === 0) {
-            pathLine.attr("d", ""); pathArea.attr("d", "");
-            return;
+            pathLine.transition().duration(500).attr("d", ""); 
+            pathArea.transition().duration(500).attr("d", "");
+            svgTrend.selectAll(".dot").transition().duration(500).attr("r", 0).remove();
+            svgTrend.selectAll(".hit-area").remove();
+            return; // Ahora sí, todo limpio antes de salir
         }
 
         xTrend.domain(d3.extent(sortedData, d => d.date));
