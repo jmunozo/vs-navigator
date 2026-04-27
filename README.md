@@ -1,13 +1,10 @@
-/**
- * VSN: Visual Sales Navigator
- * Fuente de Datos: Superstore Sales Dataset (Kaggle/Tableau)
- * Procesamiento y Visualización: D3.js v7
- */
- 
-**Análisis comercial estratégico impulsado por datos.**
+# VSN: Visual Sales Navigator
+
+**Análisis comercial estratégico impulsado por datos.** *<small>Fuente de datos: Superstore Sales Dataset (Kaggle/Tableau) | Procesamiento visual: D3.js v7</small>*
 
 ## 🎯 Proyecto
 [![Vercel Deployment](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vs-navigator.vercel.app)
+[![Tech Stack](https://img.shields.io/badge/Stack-D3.js%20|%20HTML5%20|%20CSS3-blue)](https://d3js.org) 
 
 VSN es un dashboard analítico de alto impacto diseñado para transformar archivos CSV masivos en una centro de control interactivo. Permite explorar ventas por geografía, tiempo y categorías en un entorno profesional.
 
