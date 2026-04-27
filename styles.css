@@ -291,3 +291,84 @@ body {
 #kpi-sales, #kpi-aov { color: var(--accent-cyan); }
 #kpi-orders { color: var(--accent-pink); }
 #kpi-state { color: var(--accent-blue); }
+
+/* =======================================================
+   📱 DISEÑO RESPONSIVO (MÓVILES Y TABLETS)
+======================================================== */
+
+/* Adaptación para Tablets y Laptops pequeñas */
+@media screen and (max-width: 1024px) {
+    .grid-layout {
+        grid-template-columns: 1fr; 
+    }
+    
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .filters {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Adaptación para Celulares */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 10px; 
+    }
+
+    .top-bar h1 {
+        font-size: 1.2rem;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 5px;
+    }
+
+    .filter-group select, 
+    .search-input {
+        width: 100%; 
+        margin-top: 5px;
+    }
+
+    .btn-reset, .btn-theme {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .kpi-container {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px;
+    }
+
+    .kpi-card {
+        padding: 10px;
+    }
+
+    .kpi-card h3 {
+        font-size: 1rem;
+    }
+
+    #map-container {
+        height: 250px !important; 
+    }
+    
+    #map-legend {
+        transform: scale(0.8);
+        transform-origin: bottom right;
+        bottom: 0px !important;
+        right: 0px !important;
+    }
+}
